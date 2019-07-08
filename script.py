@@ -88,9 +88,11 @@ def main():
         print(data.shape)
         raw = prepareRaw(data)
 
+        # acha os tempos do ritmo alpha
         # for i in range(fileLimitTime - window):
         #     findAlphaTime(raw, i, window)
 
+        # plota os tempos selecionados
         for i in times[arqPos]:
             plotWindowTime(raw, i, window)
 
