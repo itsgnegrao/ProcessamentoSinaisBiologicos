@@ -67,7 +67,7 @@ def findAlphaTime(raw, tmin, window):
     
     if (indexMaiorFaixa == 0):
         indexSegMaiorFaixa = np.argmax(np.array(faixas[1:]))+1
-        print(f'{tmin}: {scaleValue(faixas[indexMaiorFaixa], faixas[indexSegMaiorFaixa])}')
+        print(f'tempo {tmin} - {tmin+window}: {scaleValue(faixas[indexMaiorFaixa], faixas[indexSegMaiorFaixa])} %')
 
 def plotWindowTime(raw, tmin, window, fmax=30):
     psds, freqs = psdw(raw, tmin=tmin, tmax=tmin+window, fmax=fmax)
@@ -78,19 +78,22 @@ def plotWindowTime(raw, tmin, window, fmax=30):
 def main():
     # arquivos
     arquivos = gop('ls data_10hz').split('\n')
+
+    # Tempos selecionados a mão
     times = [[95, 96, 234, 367, 597, 786],
             [39, 46, 110, 130, 280, 363],
             [103, 114, 136, 154, 171, 185]]
     window = 3
     
+    # Para cada arquivo
     for arqPos, arq in enumerate(arquivos):
         data, fileLimitTime = loadData(arq)
         print(data.shape)
         raw = prepareRaw(data)
 
         # acha os tempos do ritmo alpha
-        # for i in range(fileLimitTime - window):
-        #     findAlphaTime(raw, i, window)
+        for i in range(fileLimitTime - window):
+            findAlphaTime(raw, i, window)
 
         # plota os tempos selecionados
         for i in times[arqPos]:
